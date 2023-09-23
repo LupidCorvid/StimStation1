@@ -84,7 +84,6 @@ public class NewBehaviourScript : MonoBehaviour
             alpha.g -= .06f;
             alpha.b -= .06f;
             sr.color = alpha;
-            print("hi");
         }
         else
             droppedPhone = false; //Ends function
