@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class TimerScript : MonoBehaviour
 {
     //Constants
     //Amount of time per video
