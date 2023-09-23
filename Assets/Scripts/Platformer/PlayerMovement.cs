@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private int moveSpeed = 3;
+    [SerializeField] private float moveSpeed = 2.5f;
+    [SerializeField] private float jumpHeight = 2.5f;
+
+    [SerializeField] private bool isGrounded = false;
+    [SerializeField] private LayerMask ground;
+
     [SerializeField] private float moveX;
+    [SerializeField] private bool facingRight = true;
 
     [SerializeField] Rigidbody2D rb;
 
@@ -20,10 +26,35 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizantal") * moveSpeed;
-        if (moveX > 0)
+        moveX = Input.GetAxisRaw("Horizontal") * moveSpeed;
+        rb.velocity = new Vector2(moveSpeed * moveX, rb.velocity.y);
+        flipX();
+
+        
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(new Vector2(moveX, 0f));
+            Jump();
         }
+    }
+
+    private void flipX()
+    {
+        if (facingRight && moveX < 0 || !facingRight && moveX >0)
+        {
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1;
+            transform.localScale = localScale;
+            facingRight = !facingRight;
+        }
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+    }
+
+    private void checkGrounded()
+    {
+
     }
 }
