@@ -29,6 +29,11 @@ public class PlayerMovement : MonoBehaviour
     //For flashing 
     private UnityEngine.Color objColor;
 
+    //Videoscript toggling
+    VideoScript vScript;
+
+
+
     private bool phoneNear = false;
     [SerializeField] GameObject phonePrefab;
 
@@ -46,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         objColor = sprite.color;
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        vScript = FindObjectOfType<VideoScript>();
     }
 
     // Update is called once per frame
@@ -67,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && phoneNear)
             {
                 hasPhone = true;
+                vScript.pickedUpPhone = true;
                 GameObject phone = GameObject.Find("Phone Drop");
                 Destroy(phone);
             }
@@ -163,8 +170,8 @@ public class PlayerMovement : MonoBehaviour
     private void DropPhone()
     {
         hasPhone = false;
+        vScript.droppedPhone = true;
         phoneNear = false;
-        Debug.Log("Drop phone");
 
 
         Instantiate(phonePrefab, new Vector3(dropPoint.position.x, dropPoint.position.y, dropPoint.position.z), Quaternion.identity);

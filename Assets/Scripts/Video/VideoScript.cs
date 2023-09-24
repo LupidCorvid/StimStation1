@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
-public class NewBehaviourScript : MonoBehaviour
+public class VideoScript : MonoBehaviour
 {
     public VideoPlayer currentClip;
     SpriteRenderer sr;
