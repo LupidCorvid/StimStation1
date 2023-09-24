@@ -14,7 +14,7 @@ public class VideoScript : MonoBehaviour
     public bool pickedUpPhone;
 
     float FULL_ALPHA = 1;
-    float EMPTY_ALPHA = .1f;
+    float EMPTY_ALPHA = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -66,12 +66,12 @@ public class VideoScript : MonoBehaviour
     void PauseVideo()
     {
         currentClip.Pause();
-        bool isPaused = true;
+        isPaused = true;
     }
     void PlayVideo()
     {
         currentClip.Play();
-        bool isPaused = false;
+        isPaused = false;
     }
 
     public void PhoneDropped()
@@ -86,8 +86,12 @@ public class VideoScript : MonoBehaviour
             sr.color = alpha;
         }
         else
+        {
             droppedPhone = false; //Ends function
+        }
     }
+
+    
 
     public void PhonePickedUp()
     {

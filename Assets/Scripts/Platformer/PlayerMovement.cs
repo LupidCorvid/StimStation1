@@ -11,26 +11,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 2.5f;
     [SerializeField] private float jumpHeight = 5f;
 
-    [SerializeField] private bool isGrounded = false;
+     private bool isGrounded = false;
     [SerializeField] private LayerMask ground;
     [SerializeField] private Transform feetPoint;
     [SerializeField] private float checkDistance;
-    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] Transform dropPoint;
 
     [SerializeField] public bool hasPhone = true;
     [SerializeField] GameObject controlText;
-    public bool textShowing = false;
+    private bool textShowing = false;
 
     public int knockForce = 3;
     public bool knockedBack = true;
     public float hitStunTime = 0.5f;
 
-    //For flashing 
-    private UnityEngine.Color objColor;
-
     //Videoscript toggling
-    VideoScript vScript;
+    [SerializeField] private VideoScript vScript;
 
 
 
@@ -48,10 +44,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        objColor = sprite.color;
         rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        vScript = FindObjectOfType<VideoScript>();
     }
 
     // Update is called once per frame
@@ -74,7 +67,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 hasPhone = true;
                 vScript.pickedUpPhone = true;
-                GameObject phone = GameObject.Find("Phone Drop");
+                vScript.PhonePickedUp();
+                GameObject phone = GameObject.Find("Phone Drop(Clone)");
                 Destroy(phone);
             }
         }
@@ -171,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
     {
         hasPhone = false;
         vScript.droppedPhone = true;
+        vScript.PhoneDropped();
         phoneNear = false;
 
 

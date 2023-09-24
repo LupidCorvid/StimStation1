@@ -8,7 +8,7 @@ public class TimerScript : MonoBehaviour
 {
     //Constants
     //Amount of time per video
-    float VID1 = 4f;
+    float VID1 = 10f;
     float VID2 = 3f;
     float VID3 = 3f;
     float VID4 = 4f;
