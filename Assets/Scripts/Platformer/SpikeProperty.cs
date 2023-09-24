@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpikeProperty : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class SpikeProperty : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
+            Text tempText = GameObject.Find("TimeObject").GetComponent<Text>();
+            tempText.text = "Ouchie! :(";
+            tempText.color = Color.red;
+            FindObjectOfType<TimerScript>().gameObject.SetActive(false);
             player.popAndReset();
         }
     }

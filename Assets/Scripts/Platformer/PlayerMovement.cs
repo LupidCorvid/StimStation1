@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         AnimationCheck();
 
-        if (!knockedBack)
+        if (!knockedBack && !vScript.isPaused)
         {
             moveX = Input.GetAxisRaw("Horizontal") * moveSpeed;
             rb.velocity = new Vector2(moveSpeed * moveX, rb.velocity.y);
