@@ -8,8 +8,8 @@ public class TimerScript : MonoBehaviour
 {
     //Constants
     //Amount of time per video
-    float VID1 = 15f;
-    float VID2 = 2f;
+    float VID1 = 4f;
+    float VID2 = 3f;
     float VID3 = 3f;
     float VID4 = 4f;
     float VID5 = 5f;
@@ -21,11 +21,17 @@ public class TimerScript : MonoBehaviour
     int minutes;
     float seconds;
     float timerVar; //Tracks time.deltatime in seconds
+    public string nextSceneName;
+    public int correctBtn;
+
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
+        nextSceneName = "";
+        correctBtn = 0;
         timerTxt = gameObject.GetComponent<Text>();
         CheckLevel();
         timerIsPlaying = true;
@@ -56,6 +62,7 @@ public class TimerScript : MonoBehaviour
         }
 
         //Player ran out of time
+        //RESET LEVEL
         if (timerEnded)
         {
             timerTxt.text = "" + "TIME OVER";
@@ -63,6 +70,7 @@ public class TimerScript : MonoBehaviour
     }
 
     //Checks what level is currently up so that setVariables() can be called
+    //TODO: Make sure to double check scale for project scope
     void CheckLevel()
     {
         string CurrentScene = SceneManager.GetActiveScene().name;
@@ -70,33 +78,37 @@ public class TimerScript : MonoBehaviour
         switch (CurrentScene)
         {
             case "Level 1":
-                setVariables(VID1);
+                setVariables(VID1, "Level 2", 1);
                 break;
             case "Level 2":
-                setVariables(VID2);
+                setVariables(VID2, "Title", 4);
                 break;
             case "Level 3":
-                setVariables(VID3);
+                setVariables(VID3, "Level 4", 1);
                 break;
             case "Level 4":
-                setVariables(VID4);
+                setVariables(VID4, "Level 5", 1);
                 break;
             case "Level 5":
-                setVariables(VID5);
+                setVariables(VID5, "Level 1", 1);
                 break;
             default:
                 print("Error in scene name. Going to default settings...");
-                setVariables(VID1);
+                setVariables(VID1, "Level 2", 1);
                 break;
         }
-
-        print("Debug: Vid length is " + vidLength);
+        
     }
 
     //Called at the start, sets all variables that would be unique per level
-    void setVariables(float length)
+    //length = length of movie in seconds
+    //name = name of the next level's scene
+    //correctBtn = correct answer for this scene
+    void setVariables(float length, string name, int correctBtnNum)
     {
         vidLength = length; //vidLength is given in seconds
+        nextSceneName = name;
+        correctBtn = correctBtnNum;
 
         //Convert vid length into minutes and seconds
         minutes = (int) (vidLength / 60);
@@ -104,9 +116,11 @@ public class TimerScript : MonoBehaviour
 
         //Update text object to initials
         //Update visual
-        timerTxt.text = "" + minutes + ":" + seconds;
+        if (seconds < 10)
+            timerTxt.text = "" + minutes + ":0" + seconds;
+        else
+            timerTxt.text = "" + minutes + ":" + seconds;
 
-        print(vidLength + " " + minutes + ":" + seconds);
     }
 
     //Timer counts down

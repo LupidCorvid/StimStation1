@@ -74,7 +74,7 @@ public class NewBehaviourScript : MonoBehaviour
         bool isPaused = false;
     }
 
-    void PhoneDropped()
+    public void PhoneDropped()
     {
         //Fades screen to black when phone is dropped
         if(alpha.a > EMPTY_ALPHA)
@@ -84,13 +84,12 @@ public class NewBehaviourScript : MonoBehaviour
             alpha.g -= .06f;
             alpha.b -= .06f;
             sr.color = alpha;
-            print("hi");
         }
         else
             droppedPhone = false; //Ends function
     }
 
-    void PhonePickedUp()
+    public void PhonePickedUp()
     {
         //Makes screen regular when you pick the phone back up
         if (alpha.a < FULL_ALPHA)
