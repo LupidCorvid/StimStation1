@@ -212,6 +212,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimationCheck()
     {
+        if (moveX != 0)
+        {
+            anim.SetFloat("moveX", 1f);
+        } else
+        {
+            anim.SetFloat("moveX", 0f);
+        }
+        
         if (hasPhone)
         {
             anim.SetBool("hasPhone", true);
