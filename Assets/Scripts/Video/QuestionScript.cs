@@ -50,7 +50,7 @@ public class QuestionScript : MonoBehaviour
     {
         //Check if it's time to show the questions
         //TODO: change so that it happens when the player makes it to the end
-        if (GameObject.Find("TimeObject").GetComponent<TimerScript>().timerEnded)
+        if (GameObject.Find("TimeObject").GetComponent<TimerScript>().timerEnded && FindObjectOfType<victoryCheck>().levelCleared)
         {
             questionsAreHappening = true;
         }

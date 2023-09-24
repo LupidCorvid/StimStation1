@@ -134,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (hasPhone)
             {
+                Debug.Log("Dropped Phone");
                 DropPhone();
             }
             if (!knockedBack)
@@ -170,12 +171,14 @@ public class PlayerMovement : MonoBehaviour
     {
         hasPhone = false;
         vScript.droppedPhone = true;
+
+        Debug.Log("TrytoDrop");
+
         vScript.PhoneDropped();
         phoneNear = false;
 
-
         Instantiate(phonePrefab, new Vector3(dropPoint.position.x, dropPoint.position.y, dropPoint.position.z), Quaternion.identity);
-
+        Debug.Log("Dropped?");
 
     }
 

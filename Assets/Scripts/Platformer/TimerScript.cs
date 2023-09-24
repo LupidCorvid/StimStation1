@@ -8,7 +8,7 @@ public class TimerScript : MonoBehaviour
 {
     //Constants
     //Amount of time per video
-    float VID1 = 10f;
+    float VID1 = 30f;
     float VID2 = 3f;
     float VID3 = 3f;
     float VID4 = 4f;
@@ -22,7 +22,8 @@ public class TimerScript : MonoBehaviour
     float seconds;
     float timerVar; //Tracks time.deltatime in seconds
     public string nextSceneName;
-    public int correctBtn;
+    public int correctBtn = 0;
+    private bool resetting = false;
 
     
 
@@ -31,7 +32,6 @@ public class TimerScript : MonoBehaviour
     void Start()
     {
         nextSceneName = "";
-        correctBtn = 0;
         timerTxt = gameObject.GetComponent<Text>();
         CheckLevel();
         timerIsPlaying = true;
@@ -63,9 +63,11 @@ public class TimerScript : MonoBehaviour
 
         //Player ran out of time
         //RESET LEVEL
-        if (timerEnded)
+        if (timerEnded && !FindObjectOfType<victoryCheck>().levelCleared && !resetting)
         {
             timerTxt.text = "" + "TIME OVER";
+            timerTxt.color = Color.red;
+            StartCoroutine("CallReset");
         }
     }
 
@@ -78,7 +80,7 @@ public class TimerScript : MonoBehaviour
         switch (CurrentScene)
         {
             case "Level 1":
-                setVariables(VID1, "Level 2", 1);
+                setVariables(VID1, "Level 2", 2);
                 break;
             case "Level 2":
                 setVariables(VID2, "Title", 4);
@@ -93,8 +95,8 @@ public class TimerScript : MonoBehaviour
                 setVariables(VID5, "Level 1", 1);
                 break;
             default:
-                print("Error in scene name. Going to default settings...");
-                setVariables(VID1, "Level 2", 1);
+                Debug.Log("Error in scene name. Going to default settings...");
+                setVariables(VID1, "Level 1", 2);
                 break;
         }
         
@@ -152,5 +154,15 @@ public class TimerScript : MonoBehaviour
                     timerTxt.text = "" + minutes + ":" + seconds;
             }
         }
+    }
+
+    IEnumerator CallReset()
+    {
+        yield return new WaitForSeconds(3f);
+        timerTxt.color = Color.white;
+        resetting = true;
+        timerTxt.text = "Resetting Level...";
+        yield return new WaitForSeconds(2f);
+        FindObjectOfType<GameManager>().ResetScene();
     }
 }
