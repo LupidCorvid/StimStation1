@@ -17,8 +17,10 @@ public class QuestionScript : MonoBehaviour
     Color alphaText;
     Color alphaBtn;
     Color alphaBackdrop;
+    Color alphaResults;
     [SerializeField] GameObject btn1, btn2, btn3, btn4;
     int userSelectedBtn;
+    float waitTime;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +30,13 @@ public class QuestionScript : MonoBehaviour
         finishedShowing = false;
         nextSceneName = "";
         userSelectedBtn = 0;
-        
+        waitTime = 0;
+
         alphaText = GameObject.Find("Opt1txt").GetComponent<Text>().color;
         alphaBtn = GameObject.Find("Opt1btn").GetComponent<Image>().color;
         alphaBackdrop = GameObject.Find("Question Backdrop").GetComponent<Image>().color;
-        
+        alphaResults = GameObject.Find("results").GetComponent<Text>().color;
+
 
         //Disables buttons
         btn1.SetActive(false);
@@ -65,18 +69,36 @@ public class QuestionScript : MonoBehaviour
 
             print("User button: " + userSelectedBtn + " | Correct button: " + correctBtnNum);
 
+
             //Reset level or go to next level
             if (userSelectedBtn == correctBtnNum)
             {
-                //TODO: say you're right
                 print("correct!");
-                ChangeScenes(nextSceneName);
+
+                alphaResults.a = 1;
+                alphaResults = Color.green;
+                GameObject.Find("results").GetComponent<Text>().text = "CORRECT!!! :D";
+                GameObject.Find("results").GetComponent<Text>().color = alphaResults;
+
+                
+                if (waitTime < 2f)
+                    waitTime += Time.deltaTime;
+                else
+                    ChangeScenes(nextSceneName);
             }
             else
             {
-                //TODO: say you're wrong
                 print("No!");
-                //ChangeScenes(SceneManager.GetActiveScene().name);
+
+                alphaResults.a = 1;
+                alphaResults = Color.red;
+                GameObject.Find("results").GetComponent<Text>().text = "Wrong. :/";
+                GameObject.Find("results").GetComponent<Text>().color = alphaResults;
+                
+                if (waitTime < 2f)
+                    waitTime += Time.deltaTime;
+                else
+                    ChangeScenes(SceneManager.GetActiveScene().name);
             }
         }
     }
