@@ -81,7 +81,7 @@ public class QuestionScript : MonoBehaviour
                 GameObject.Find("results").GetComponent<Text>().color = alphaResults;
 
                 
-                if (waitTime < 2f)
+                if (waitTime < 4f)
                     waitTime += Time.deltaTime;
                 else
                     ChangeScenes(nextSceneName);
@@ -95,7 +95,7 @@ public class QuestionScript : MonoBehaviour
                 GameObject.Find("results").GetComponent<Text>().text = "Wrong. :/";
                 GameObject.Find("results").GetComponent<Text>().color = alphaResults;
                 
-                if (waitTime < 2f)
+                if (waitTime < 4f)
                     waitTime += Time.deltaTime;
                 else
                     ChangeScenes(SceneManager.GetActiveScene().name);
