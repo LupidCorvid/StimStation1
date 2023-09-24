@@ -83,7 +83,7 @@ public class TimerScript : MonoBehaviour
                 setVariables(VID1, "Level 2", 2);
                 break;
             case "Level 2":
-                setVariables(VID2, "Title", 4);
+                setVariables(VID2, "Title", 3);
                 break;
             case "Level 3":
                 setVariables(VID3, "Level 4", 1);

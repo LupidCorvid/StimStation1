@@ -1184,7 +1184,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Incorrect
+  m_Text: Red
 --- !u!222 &201171420
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2257,7 +2257,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Incorrect
+  m_Text: Blue
 --- !u!222 &465544664
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3248,7 +3248,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Incorrect
+  m_Text: Purple
 --- !u!222 &642499179
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5718,7 +5718,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: What animal showed up second?
+  m_Text: What is the color of Samuel's shoes?
 --- !u!222 &967845702
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9304,7 +9304,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Correct
+  m_Text: Orange
 --- !u!222 &1853591712
 CanvasRenderer:
   m_ObjectHideFlags: 0
