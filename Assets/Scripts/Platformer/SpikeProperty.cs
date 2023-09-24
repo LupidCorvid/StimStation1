@@ -11,7 +11,7 @@ public class SpikeProperty : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerMovement player = collision.gameObject.GetComponent<PlayerMovement>();
-            Text tempText = GameObject.Find("TimeObeject").GetComponent<Text>();
+            Text tempText = GameObject.Find("TimeObject").GetComponent<Text>();
             tempText.text = "Ouchie! :(";
             tempText.color = Color.red;
             FindObjectOfType<TimerScript>().timerIsPlaying = false;
