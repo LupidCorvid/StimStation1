@@ -63,12 +63,14 @@ public class QuestionScript : MonoBehaviour
             nextSceneName = GameObject.Find("TimeObject").GetComponent<TimerScript>().nextSceneName;
             correctBtnNum = GameObject.Find("TimeObject").GetComponent<TimerScript>().correctBtn;
 
+            print("User button: " + userSelectedBtn + " | Correct button: " + correctBtnNum);
+
             //Reset level or go to next level
             if (userSelectedBtn == correctBtnNum)
             {
                 //TODO: say you're right
                 print("correct!");
-                //ChangeScenes(nextSceneName);
+                ChangeScenes(nextSceneName);
             }
             else
             {
@@ -88,8 +90,7 @@ public class QuestionScript : MonoBehaviour
             alphaText.a += .06f;
             GameObject.Find("Question Backdrop").GetComponent<Image>().color = alphaBackdrop;
             GameObject.Find("QuestionText").GetComponent<Text>().color = alphaText;
-
-            print("hi");
+            
 
             if(alphaText.a >= FULL_ALPHA)
             {

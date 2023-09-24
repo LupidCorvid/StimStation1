@@ -8,8 +8,8 @@ public class TimerScript : MonoBehaviour
 {
     //Constants
     //Amount of time per video
-    float VID1 = 3f;
-    float VID2 = 2f;
+    float VID1 = 4f;
+    float VID2 = 3f;
     float VID3 = 3f;
     float VID4 = 4f;
     float VID5 = 5f;
@@ -81,7 +81,7 @@ public class TimerScript : MonoBehaviour
                 setVariables(VID1, "Level 2", 1);
                 break;
             case "Level 2":
-                setVariables(VID2, "Level 3", 1);
+                setVariables(VID2, "Title", 4);
                 break;
             case "Level 3":
                 setVariables(VID3, "Level 4", 1);
@@ -116,8 +116,11 @@ public class TimerScript : MonoBehaviour
 
         //Update text object to initials
         //Update visual
-        timerTxt.text = "" + minutes + ":" + seconds;
-        
+        if (seconds < 10)
+            timerTxt.text = "" + minutes + ":0" + seconds;
+        else
+            timerTxt.text = "" + minutes + ":" + seconds;
+
     }
 
     //Timer counts down
