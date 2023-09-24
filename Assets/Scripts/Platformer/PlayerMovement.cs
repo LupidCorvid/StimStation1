@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,8 +15,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private Transform feetPoint;
     [SerializeField] private float checkDistance;
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] Transform dropPoint;
 
-    
+    [SerializeField] public bool hasPhone = true;
+    [SerializeField] GameObject controlText;
+    public bool textShowing = false;
+
+    public int knockForce = 3;
+    public bool knockedBack = true;
+    public float hitStunTime = 0.5f;
+
+    //For flashing 
+    private UnityEngine.Color objColor;
+
+    private bool phoneNear = false;
+    [SerializeField] GameObject phonePrefab;
+
     private float moveX;
     
     private bool facingRight = true;
@@ -24,22 +43,37 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        objColor = sprite.color;
         rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        moveX = Input.GetAxisRaw("Horizontal") * moveSpeed;
-        rb.velocity = new Vector2(moveSpeed * moveX, rb.velocity.y);
-        flipX();
-
-        CheckGrounded();
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!knockedBack)
         {
-            Jump();
+            moveX = Input.GetAxisRaw("Horizontal") * moveSpeed;
+            rb.velocity = new Vector2(moveSpeed * moveX, rb.velocity.y);
+            flipX();
+
+            CheckGrounded();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Jump();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E) && phoneNear)
+            {
+                hasPhone = true;
+                GameObject phone = GameObject.Find("Phone Drop");
+                Destroy(phone);
+            }
         }
+
+
+
     }
 
     private void flipX()
@@ -74,4 +108,83 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
     }
+
+    private IEnumerator hitStunReset()
+    {
+        
+        yield return new WaitForSeconds(hitStunTime);
+        knockedBack = false;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag== "Pickup") {
+            ToggleHiddenText();
+            phoneNear = true;
+        }
+        //Drop the player's phone
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (hasPhone)
+            {
+                DropPhone();
+            }
+            if (!knockedBack)
+            {
+                Vector2 knockDirection;
+                //Knock the player back
+                if (collision.transform.position.x > transform.position.x)
+                {
+                    knockDirection = new Vector2(-knockForce, knockForce / 2);
+                }
+                else
+                {
+                    knockDirection = new Vector2(knockForce, knockForce / 2);
+                }
+                knockedBack = true;
+                rb.AddForce(knockDirection * knockForce, ForceMode2D.Impulse);
+                StartCoroutine("hitStunReset");
+            }
+            
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Pickup")
+        {
+            ToggleHiddenText();
+            phoneNear = false;
+        }
+    }
+
+    private void DropPhone()
+    {
+        hasPhone = false;
+        phoneNear = false;
+        Debug.Log("Drop phone");
+
+
+        Instantiate(phonePrefab, new Vector3(dropPoint.position.x, dropPoint.position.y, dropPoint.position.z), Quaternion.identity);
+
+
+    }
+
+    public void ToggleHiddenText()
+    {
+        if (textShowing)
+        {
+            controlText.SetActive(false);
+            textShowing = false;
+        }
+        else
+        {
+            controlText.SetActive(true);
+            textShowing = true;
+        }
+    }
+
+
 }
