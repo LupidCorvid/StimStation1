@@ -39,18 +39,23 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] Rigidbody2D rb;
 
+    //For animations:
+    private Animator anim;
+
     
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        AnimationCheck();
+
         if (!knockedBack)
         {
             moveX = Input.GetAxisRaw("Horizontal") * moveSpeed;
@@ -188,5 +193,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void popAndReset()
+    {
+        StartCoroutine("deathWait");
+    }
+
+    IEnumerator deathWait()
+    {
+        this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        rb.constraints = RigidbodyConstraints2D.FreezePositionY;
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        yield return new WaitForSeconds(3f);
+        FindAnyObjectByType<GameManager>().ResetScene();
+    }
+
+    private void AnimationCheck()
+    {
+        if (hasPhone)
+        {
+            anim.SetBool("hasPhone", true);
+        }
+        else
+        {
+            anim.SetBool("hasPhone", false);
+        }
+    }
 
 }
